@@ -135,3 +135,53 @@ textarea:focus {
   height: 45px;
   width: 45px;
 }
+
+/* login page */
+
+.login-card-wrapper {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  font-size: 20px;
+  /* text-align: left; */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+  background-color: grey;
+}
+
+.input-area {
+  width: 100%;
+  display: grid;
+  grid-column: 1;
+  grid-template-rows: 3;
+}
+.input-area input {
+  border: none;
+  padding: 20px;
+  height: 10px;
+  width: 80%;
+  border-radius: 20px;
+}
+.login-button {
+  margin-top: 10px;
+  background-color: rgba(107, 107, 107, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 40px;
+  width: 40px; */
+  /* border-radius: 50%; */
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  color: white;
+}

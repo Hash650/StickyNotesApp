@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { db } from "../appwrite/databases";
 import { NoteContext } from "../context/NoteContext";
 import { useContext } from "react";
+
 const AddButton = () => {
   const { setNotes } = useContext(NoteContext);
   const startingPos = useRef(10);
