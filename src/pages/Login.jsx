@@ -22,6 +22,8 @@ const Login = () => {
     const password = loginForm.current.pass.value;
 
     const userInfo = { email, password };
+
+    // call login function
     loginUser(userInfo);
 
     console.log(userInfo);

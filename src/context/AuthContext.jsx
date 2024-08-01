@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect, createContext } from "react";
+import { account } from "../appwrite/config";
 import Spinner from "../icons/Spinner";
 
 const AuthContext = createContext();
@@ -9,16 +10,44 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
 
   useEffect(() => {
-    setLoading(false);
+    checkUserStatus();
   }, []);
 
-  const loginUser = (userInfo) => {};
+  const loginUser = async (userInfo) => {
+    setLoading(true);
+    try {
+      // let response = await account.createEmailPasswordSession(
+      //   userInfo.email,
+      //   userInfo.password
+      // );
 
-  const logoutUser = () => {};
+      let accountDetail = await account.get();
+      setUser(accountDetail);
+
+      console.log("Account: ", accountDetail);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  const logoutUser = () => {
+    account.deleteSession("current");
+    setUser(null);
+  };
 
   const registerUser = (userInfo) => {};
 
-  const checkUserStatus = () => {};
+  const checkUserStatus = async () => {
+    try {
+      let accountDetails = await account.get();
+      setUser(accountDetails);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  };
 
   const contextData = { user, loginUser, logoutUser, registerUser };
 
