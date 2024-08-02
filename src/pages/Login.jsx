@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginButton from "../Components/LoginButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const { user, loginUser } = useAuth();
   const navigate = useNavigate();
+  const [loginSuccess, setLoginSuccess] = useState(true);
 
   const loginForm = useRef(null);
 
@@ -24,7 +25,11 @@ const Login = () => {
     const userInfo = { email, password };
 
     // call login function
-    loginUser(userInfo);
+    const loginResult = loginUser(userInfo);
+
+    if (!loginResult) {
+      setLoginSuccess(false);
+    }
 
     console.log(userInfo);
   };
@@ -44,8 +49,18 @@ const Login = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="pass" id="" />
             <LoginButton onSubmit={handleSubmit} />
+            {loginSuccess ? (
+              <></>
+            ) : (
+              <p className="credentials-mismatch">
+                Incorrect username or password
+              </p>
+            )}
           </div>
         </form>
+        <span>
+          Not a user? <Link to={"/register"}>register here</Link>
+        </span>
       </div>
     </div>
   );

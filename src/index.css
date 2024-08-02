@@ -151,6 +151,7 @@ textarea:focus {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   height: 500px;
@@ -189,6 +190,7 @@ textarea:focus {
 .logout-btn-container {
   position: fixed;
   top: 5%;
+  cursor: pointer;
   right: 2em;
   box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
     0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
@@ -207,4 +209,69 @@ textarea:focus {
   text-decoration: none;
   font-size: 20px;
   color: white;
+}
+
+/* register page */
+
+.register-card-wrapper {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-card {
+  font-size: 20px;
+  /* text-align: left; */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+  /* background-color: grey; */
+}
+.form-field {
+  display: grid;
+  /* row-gap: 30px; */
+  grid-template-rows: 1fr 1fr;
+  align-items: end;
+  /* justify-content: center; */
+}
+
+.form-btn {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+  z-index: 10000;
+  background-color: #35363e;
+  padding: 1em 1em;
+  border-radius: 40px;
+  transition: transform 0.3s ease;
+}
+
+.form-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(170, 183, 198, 0.7);
+}
+.form-btn input {
+  background-color: transparent;
+  font-size: 20px;
+  border-radius: 20px;
+  /* height: 30px; */
+  width: auto;
+  border: none;
+}
+
+.form-field input {
+  border: none;
+  padding: 20px;
+  height: 10px;
+  width: 80%;
+  border-radius: 20px;
 }

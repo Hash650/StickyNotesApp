@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect, createContext } from "react";
+import { ID } from "appwrite";
 import { account } from "../appwrite/config";
 import Spinner from "../icons/Spinner";
 
@@ -15,18 +16,20 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (userInfo) => {
     setLoading(true);
+
     try {
-      // let response = await account.createEmailPasswordSession(
-      //   userInfo.email,
-      //   userInfo.password
-      // );
+      let response = await account.createEmailPasswordSession(
+        userInfo.email,
+        userInfo.password
+      );
 
       let accountDetail = await account.get();
       setUser(accountDetail);
 
-      console.log("Account: ", accountDetail);
+      // console.log("Account: ", accountDetail);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      return false;
     }
     setLoading(false);
   };
@@ -36,14 +39,36 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const registerUser = (userInfo) => {};
+  const registerUser = async (userInfo) => {
+    setLoading(true);
+
+    try {
+      let response = await account.create(
+        ID.unique(),
+        userInfo.email,
+        userInfo.pass1,
+        userInfo.name
+      );
+
+      await account.createEmailPasswordSession(userInfo.email, userInfo.pass1);
+
+      let accountDetail = await account.get();
+      setUser(accountDetail);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setLoading(false);
+  };
 
   const checkUserStatus = async () => {
     try {
+      // let sessions = await account.getSession("current");
+      // console.log(sessions);
       let accountDetails = await account.get();
+      console.log(accountDetails);
       setUser(accountDetails);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
 
     setLoading(false);
