@@ -4,14 +4,19 @@ import { useRef } from "react";
 import { db } from "../appwrite/databases";
 import { NoteContext } from "../context/NoteContext";
 import { useContext } from "react";
-import { Query } from "appwrite";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import Spinner from "../icons/Spinner";
 
 const AddButton = () => {
   const { user } = useAuth();
   const { setNotes } = useContext(NoteContext);
   const startingPos = useRef(10);
+  const [loading, setLoading] = useState(false);
+
+
   const addNote = async () => {
+    setLoading(true);
     const payload = {
       position: JSON.stringify({
         x: startingPos.current,
@@ -42,16 +47,18 @@ const AddButton = () => {
       notes:[response,...currentUser.notes]
 
     })
+    console.log(updateUser);
 
 
 
     setNotes((prevState) => [response, ...prevState]);
+    setLoading(false);
     console.log(response);
   };
 
   return (
     <div id="add-btn" onClick={addNote}>
-      <Plus />
+      {loading? <Spinner/>:<Plus/>}
     </div>
   );
 };

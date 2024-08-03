@@ -33,7 +33,7 @@ const Register = () => {
   return (
     <div className="register-card-wrapper">
       <div className="register-card">
-        <form ref={registerForm} onSubmit={handleSubmit}>
+        <form ref={registerForm} >
           <div className="form-field">
             <label htmlFor="name">Name:</label>
             <input type="text" name="name" id="" />
@@ -50,7 +50,7 @@ const Register = () => {
             <label htmlFor="name">Confirm Password:</label>
             <input type="password" name="password2" id="" />
           </div>
-          <div className="form-btn">
+          <div className="form-btn" onClick={handleSubmit}>
             <input type="submit" value="Register" />
           </div>
         </form>

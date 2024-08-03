@@ -55,8 +55,6 @@ export const AuthProvider = ({ children }) => {
 
       let accountDetail = await account.get();
 
-      console.log(accountDetail);
-
       // using a registered user to make a user in the users collection
 
       // create payload for the user
@@ -79,11 +77,10 @@ export const AuthProvider = ({ children }) => {
 
   const checkUserStatus = async () => {
     try {
-      // let sessions = await account.getSession("current");
-      // console.log(sessions);
+
       let accountDetails = await account.get();
-      console.log(accountDetails);
       setUser(accountDetails);
+      
     } catch (error) {
       console.log(error.message);
     }
