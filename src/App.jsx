@@ -5,6 +5,7 @@ import NoteProvider from "./context/NoteContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./context/AuthContext";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
@@ -26,14 +27,9 @@ function App() {
             </Route>
           </Routes>
         </AuthProvider>
+      <Footer/>
       </div>
     </Router>
-
-    // <div id="app">
-    //   <NoteProvider>
-    //     <NotesPage />
-    //   </NoteProvider>
-    // </div>
   );
 }
 
