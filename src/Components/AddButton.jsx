@@ -4,8 +4,11 @@ import { useRef } from "react";
 import { db } from "../appwrite/databases";
 import { NoteContext } from "../context/NoteContext";
 import { useContext } from "react";
+import { Query } from "appwrite";
+import { useAuth } from "../context/AuthContext";
 
 const AddButton = () => {
+  const { user } = useAuth();
   const { setNotes } = useContext(NoteContext);
   const startingPos = useRef(10);
   const addNote = async () => {
@@ -20,6 +23,28 @@ const AddButton = () => {
     startingPos.current += 10;
 
     const response = await db.notes.create(payload);
+
+
+    //get collections
+    const usersList = await db.users.list();
+    //get documents in our collection
+    const users = usersList.documents;
+    //find the current user from documents 
+    const currentUser = users.find((u)=>{
+      return u.$id == user.$id;
+    })
+
+    //update current user's notes field to create a link 
+    //between user and a documents inside the notes collection
+    const updateUser = await db.users.update(user.$id,{
+      name: currentUser.name,
+      user_ID: currentUser.user_ID,
+      notes:[response,...currentUser.notes]
+
+    })
+
+
+
     setNotes((prevState) => [response, ...prevState]);
     console.log(response);
   };

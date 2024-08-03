@@ -63,7 +63,8 @@ function NoteCard(props) {
     const payload = { [key]: JSON.stringify(value) };
 
     try {
-      await db.notes.update(props.note.$id, payload);
+      const updatedNote= await db.notes.update(props.note.$id, payload);
+      // console.log("Updated Note, ", updatedNote);
     } catch (error) {
       console.log(error);
     }

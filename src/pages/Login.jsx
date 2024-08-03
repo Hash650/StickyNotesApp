@@ -6,8 +6,6 @@ import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const { user, loginUser } = useAuth();
   const navigate = useNavigate();
-  const [loginSuccess, setLoginSuccess] = useState(true);
-
   const loginForm = useRef(null);
 
   useEffect(() => {
@@ -16,7 +14,7 @@ const Login = () => {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const email = loginForm.current.email.value;
@@ -25,11 +23,9 @@ const Login = () => {
     const userInfo = { email, password };
 
     // call login function
-    const loginResult = loginUser(userInfo);
+    const loginResult = await loginUser(userInfo);
 
-    if (!loginResult) {
-      setLoginSuccess(false);
-    }
+    console.log(loginResult);
 
     console.log(userInfo);
   };
@@ -49,13 +45,9 @@ const Login = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="pass" id="" />
             <LoginButton onSubmit={handleSubmit} />
-            {loginSuccess ? (
-              <></>
-            ) : (
-              <p className="credentials-mismatch">
-                Incorrect username or password
-              </p>
-            )}
+            {/* <p hidden={loginSuccess} id="credentials-mismatch">
+              Incorrect username or password
+            </p> */}
           </div>
         </form>
         <span>

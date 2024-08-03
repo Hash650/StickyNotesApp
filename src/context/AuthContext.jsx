@@ -2,6 +2,7 @@ import { useContext, useState, useEffect, createContext } from "react";
 import { ID } from "appwrite";
 import { account } from "../appwrite/config";
 import Spinner from "../icons/Spinner";
+import { db } from "../appwrite/databases";
 
 const AuthContext = createContext();
 
@@ -25,12 +26,12 @@ export const AuthProvider = ({ children }) => {
 
       let accountDetail = await account.get();
       setUser(accountDetail);
-
-      // console.log("Account: ", accountDetail);
     } catch (error) {
       console.log(error.message);
+      setLoading(false);
       return false;
     }
+    
     setLoading(false);
   };
 
@@ -53,12 +54,28 @@ export const AuthProvider = ({ children }) => {
       await account.createEmailPasswordSession(userInfo.email, userInfo.pass1);
 
       let accountDetail = await account.get();
+
+      console.log(accountDetail);
+
+      // using a registered user to make a user in the users collection
+
+      // create payload for the user
+      const payload = {
+        name: JSON.stringify(accountDetail.name),
+        user_ID: JSON.stringify(accountDetail.$id),
+        notes: [],
+      };
+
+      //create a new document in the users collection
+      const response2 = await db.users.create(payload,accountDetail.$id);
+
       setUser(accountDetail);
     } catch (error) {
       console.log(error.message);
     }
     setLoading(false);
   };
+
 
   const checkUserStatus = async () => {
     try {

@@ -1,10 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import Spinner from "../icons/Spinner";
 import { db } from "../appwrite/databases";
-
+import { useAuth } from "./AuthContext";
 export const NoteContext = createContext();
 
 const NoteProvider = ({ children }) => {
+  const { user } = useAuth();
+
   const [selectedNote, setSelectedNote] = useState(null);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,16 +14,28 @@ const NoteProvider = ({ children }) => {
   useEffect(() => {
     init();
   }, []);
+
   const init = async () => {
     const response = await db.notes.list();
 
-    setNotes(response.documents);
-    setLoading(false);
+    const usersList = await db.users.list();
 
-    // console.log(response);
+    const users = usersList.documents;
+
+
+    const currentUser = users.find((u)=>{
+      return u.$id == user.$id;
+    })
+
+    const currentUserNotes = currentUser.notes;
+    
+
+    setNotes(currentUserNotes);
+    setLoading(false);
   };
 
   const contextData = { notes, setNotes, selectedNote, setSelectedNote };
+
   return (
     <NoteContext.Provider value={contextData}>
       {loading ? (

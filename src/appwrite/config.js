@@ -15,6 +15,11 @@ const collections = [
     id: import.meta.env.VITE_COLLECTION_NOTES_ID,
     dbId: import.meta.env.VITE_DATABASE_ID,
   },
+  {
+    name: "users",
+    id: import.meta.env.VITE_COLLECTION_USERS_ID,
+    dbId: import.meta.env.VITE_DATABASE_ID,
+  },
 ];
 
 export { client, databases, collections, account };
